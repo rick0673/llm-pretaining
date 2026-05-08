@@ -1,0 +1,21 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Data and generated artifacts
+data/
+out/
+model_result/
+wandb/
+*.bin
+*.pt
+*.pth
+*.ckpt
+
+# Logs
+*.log
