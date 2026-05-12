@@ -102,7 +102,7 @@ def main():
 
     # 6. 初始化 WandB 监控
     wandb.init(
-        project="cs336-assignment1",
+        project="llm-pretraining",
         name=args.run_name, 
         config=args
     )
