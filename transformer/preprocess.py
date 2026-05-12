@@ -2,7 +2,7 @@ import os
 import json
 import numpy as np
 from typing import List, Dict
-from cs336_basics.tokenizer import BPETokenizer
+from transformer.tokenizer import BPETokenizer
 
 def bytes_to_unicode():
     """

@@ -28,7 +28,7 @@ def run_linear(
     Returns:
         Float[Tensor, "... d_out"]: The transformed output of your linear module.
     """
-    from cs336_basics.nn import Linear  # 导入你写的类
+    from transformer.nn import Linear  # 导入你写的类
     
     # 1. 实例化
     layer = Linear(d_in, d_out, device=in_features.device, dtype=in_features.dtype)
@@ -58,7 +58,7 @@ def run_embedding(
         Float[Tensor, "... d_model"]: Batch of embeddings returned by your Embedding layer.
     """
 
-    from cs336_basics.nn import Embedding
+    from transformer.nn import Embedding
 
     embedding = Embedding(vocab_size, d_model)
 
@@ -94,7 +94,7 @@ def run_swiglu(
     # swiglu.w1.weight.data = w1_weight
     # swiglu.w2.weight.data = w2_weight
     # swiglu.w3.weight.data = w3_weight
-    from cs336_basics.nn import SwiGLU  # 确保导入路径正确
+    from transformer.nn import SwiGLU  # 确保导入路径正确
 
     # 1. 实例化模块
     # 确保 device 和 dtype 与输入数据一致
@@ -130,7 +130,7 @@ def run_scaled_dot_product_attention(
         Float[Tensor, " ... queries d_v"]: Output of SDPA
     """
     
-    from cs336_basics.nn import scaled_dot_product_attention
+    from transformer.nn import scaled_dot_product_attention
     return scaled_dot_product_attention(Q, K, V, mask=mask)
 
 
@@ -165,7 +165,7 @@ def run_multihead_self_attention(
         Float[Tensor, " ... sequence_length d_out"]: Tensor with the output of running your optimized, batched multi-headed attention
         implementation with the given QKV projection weights and input features.
     """
-    from cs336_basics.nn import CausalSelfAttention
+    from transformer.nn import CausalSelfAttention
     
     # 1. 关键：显式传入 theta=None 和 max_seq_len=None 
     # 这样你的类内部 if self.rope is not None 就会判定为 False
@@ -226,7 +226,7 @@ def run_multihead_self_attention_with_rope(
         Float[Tensor, " ... sequence_length d_out"]: Tensor with the output of running your optimized, batched multi-headed attention
         implementation with the given QKV projection weights and input features.
     """
-    from cs336_basics.nn import CausalSelfAttention
+    from transformer.nn import CausalSelfAttention
     
     # 1. 实例化 (传入 theta 和 max_seq_len 以启用 RoPE)
     model = CausalSelfAttention(
@@ -274,7 +274,7 @@ def run_rope(
     Returns:
         Float[Tensor, " ... sequence_length d_k"]: Tensor with RoPEd input.
     """
-    from cs336_basics.nn import RotaryPositionalEmbedding
+    from transformer.nn import RotaryPositionalEmbedding
     # 1. 实例化模块
     # 注意：确保将模块移动到输入张量所在的设备上
 
@@ -359,7 +359,7 @@ def run_transformer_block(
         Float[Tensor, "batch sequence_length d_model"] Tensor with the output of
         running the Transformer block on the input features while using RoPE.
     """
-    from cs336_basics.nn import TransformerBlock
+    from transformer.nn import TransformerBlock
     block = TransformerBlock(d_model, num_heads, d_ff, max_seq_len, theta, 
                              device=in_features.device, dtype=in_features.dtype)
     
@@ -460,7 +460,7 @@ def run_transformer_lm(
         Float[Tensor, "batch_size sequence_length vocab_size"]: Tensor with the predicted unnormalized
         next-word distribution for each token.
     """
-    from cs336_basics.nn import TransformerLM
+    from transformer.nn import TransformerLM
     model = TransformerLM(vocab_size, context_length, d_model, num_layers, 
                           num_heads, d_ff, rope_theta, 
                           device=in_indices.device, dtype=torch.float32)
@@ -508,7 +508,7 @@ def run_rmsnorm(
         RMSNorm of the `in_features`.
     """
 
-    from cs336_basics.nn import RMSNorm  # 导入你写的类
+    from transformer.nn import RMSNorm  # 导入你写的类
 
     rmsnorm = RMSNorm(eps = eps, d_model = d_model)
     rmsnorm.load_state_dict({'weight': weights})
@@ -532,7 +532,7 @@ def run_silu(in_features: Float[Tensor, " ..."]) -> Float[Tensor, " ..."]:
         SiLU to each element.
     """
     
-    from cs336_basics.nn import silu_fn
+    from transformer.nn import silu_fn
     return silu_fn(in_features)
 
 
@@ -556,7 +556,7 @@ def run_get_batch(
         is the sampled input sequences, and the second tuple item is the corresponding
         language modeling labels.
     """
-    from cs336_basics.data import get_batch
+    from transformer.data import get_batch
     return get_batch(dataset, batch_size, context_length, device)
 
 
@@ -574,7 +574,7 @@ def run_softmax(in_features: Float[Tensor, " ..."], dim: int) -> Float[Tensor, "
         softmax normalizing the specified `dim`.
     """
     
-    from cs336_basics.nn import softmax
+    from transformer.nn import softmax
 
     return softmax(in_features, dim=dim)
 
@@ -595,7 +595,7 @@ def run_cross_entropy(
         Float[Tensor, ""]: The average cross-entropy loss across examples.
     """
     
-    from cs336_basics.losses import cross_entropy
+    from transformer.losses import cross_entropy
     return cross_entropy(inputs, targets)
 
 
@@ -608,7 +608,7 @@ def run_gradient_clipping(parameters: Iterable[torch.nn.Parameter], max_l2_norm:
 
     The gradients of the parameters (parameter.grad) should be modified in-place.
     """
-    from cs336_basics.optimizer import clip_gradient_norm
+    from transformer.optimizer import clip_gradient_norm
     clip_gradient_norm(parameters, max_l2_norm)
 
 
@@ -616,7 +616,7 @@ def get_adamw_cls() -> Any:
     """
     Returns a torch.optim.Optimizer that implements AdamW.
     """
-    from cs336_basics.optimizer import AdamW  # 确保路径指向你的实现文件
+    from transformer.optimizer import AdamW  # 确保路径指向你的实现文件
     return AdamW
 
 
@@ -645,7 +645,7 @@ def run_get_lr_cosine_schedule(
     Returns:
         Learning rate at the given iteration under the specified schedule.
     """
-    from cs336_basics.scheduler import get_lr_cosine_schedule
+    from transformer.scheduler import get_lr_cosine_schedule
     return get_lr_cosine_schedule(
         it, max_learning_rate, min_learning_rate, warmup_iters, cosine_cycle_iters
     )
@@ -667,7 +667,7 @@ def run_save_checkpoint(
             we've completed.
         out (str | os.PathLike | BinaryIO | IO[bytes]): Path or file-like object to serialize the model, optimizer, and iteration to.
     """
-    from cs336_basics.checkpointing import save_checkpoint
+    from transformer.checkpointing import save_checkpoint
     save_checkpoint(model, optimizer, iteration, out)
 
 
@@ -689,7 +689,7 @@ def run_load_checkpoint(
     Returns:
         int: the previously-serialized number of iterations.
     """
-    from cs336_basics.checkpointing import load_checkpoint
+    from transformer.checkpointing import load_checkpoint
     return load_checkpoint(src, model, optimizer)
 
 
@@ -714,7 +714,7 @@ def get_tokenizer(
         A BPE tokenizer that uses the provided vocab, merges, and special tokens.
     """
     # raise NotImplementedError
-    from cs336_basics.tokenizer import BPETokenizer 
+    from transformer.tokenizer import BPETokenizer 
     return BPETokenizer(vocab, merges, special_tokens)
 
 def run_train_bpe(
@@ -744,5 +744,5 @@ def run_train_bpe(
                 representing that <token1> was merged with <token2>.
                 Merges are ordered by order of creation.
     """
-    from cs336_basics.train_bpe import train_bpe
+    from transformer.train_bpe import train_bpe
     return train_bpe(input_path, vocab_size, special_tokens)

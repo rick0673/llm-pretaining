@@ -6,6 +6,7 @@ __pycache__/
 .venv/
 venv/
 env/
+.idea/
 
 # Data and generated artifacts
 data/

@@ -3,12 +3,12 @@ import os
 import torch
 import numpy as np
 import wandb  # 建议安装：pip install wandb
-from cs336_basics.nn import TransformerLM
-from cs336_basics.optimizer import AdamW, clip_gradient_norm
-from cs336_basics.scheduler import get_lr_cosine_schedule
-from cs336_basics.data import get_batch
-from cs336_basics.checkpointing import save_checkpoint, load_checkpoint
-from cs336_basics.losses import cross_entropy
+from transformer.nn import TransformerLM
+from transformer.optimizer import AdamW, clip_gradient_norm
+from transformer.scheduler import get_lr_cosine_schedule
+from transformer.data import get_batch
+from transformer.checkpointing import save_checkpoint, load_checkpoint
+from transformer.losses import cross_entropy
 
 
 def main():

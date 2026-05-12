@@ -48,7 +48,7 @@ pip install torch numpy regex einops wandb jaxtyping
 在 `transformer/train_bpe.py` 中配置训练语料路径、词表大小和输出目录，然后运行：
 
 ```bash
-python transformer/train_bpe.py
+python -m transformer.train_bpe
 ```
 
 运行后会生成：
@@ -63,7 +63,7 @@ merges.txt
 在 `transformer/preprocess.py` 中配置文本输入路径、分词器路径和输出路径，然后运行：
 
 ```bash
-python transformer/preprocess.py
+python -m transformer.preprocess
 ```
 
 输出文件为 `uint16` token id 二进制文件，训练阶段通过 `np.memmap` 读取。
@@ -71,7 +71,7 @@ python transformer/preprocess.py
 ### 3. 启动模型训练
 
 ```bash
-python transformer/main_train.py \
+python -m transformer.main_train \
   --train_data_path data/TinyStoriesV2-GPT4-train.bin \
   --valid_data_path data/TinyStoriesV2-GPT4-valid.bin \
   --out_dir out \
@@ -99,7 +99,7 @@ python transformer/main_train.py \
 ### 4. 交互式推理
 
 ```bash
-python transformer/inference.py \
+python -m transformer.inference \
   --checkpoint_path out/ckpt_final.pt \
   --tokenizer_dir data/TinyStoriesV2-GPT4-train \
   --vocab_size 10000 \

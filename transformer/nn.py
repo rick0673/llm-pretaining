@@ -277,11 +277,6 @@ class CausalSelfAttention(nn.Module):
         attn_out = rearrange(attn_out, '... h s d -> ... s (h d)')
         return self.output_proj(attn_out)
 
-
-import torch
-import torch.nn as nn
-from .nn import Embedding, RMSNorm, Linear, CausalSelfAttention, SwiGLU
-
 class TransformerBlock(nn.Module):
     def __init__(self, d_model: int, num_heads: int, d_ff: int, max_seq_len: int,
                  theta: float, device=None, dtype=None, 

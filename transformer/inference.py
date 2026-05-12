@@ -3,8 +3,8 @@ import argparse
 import os
 import json
 import sys
-from cs336_basics.tokenizer import BPETokenizer
-from cs336_basics.nn import TransformerLM
+from transformer.tokenizer import BPETokenizer
+from transformer.nn import TransformerLM
 
 
 def bytes_to_unicode():
@@ -61,7 +61,7 @@ def load_trained_tokenizer(vocab_path, merges_path, special_tokens=["<|endoftext
 
 
 def main():
-    parser = argparse.ArgumentParser(description="CS336 Transformer Inference Script")
+    parser = argparse.ArgumentParser(description="Transformer language model inference script")
     # --- 模型参数 (必须与训练时完全一致！) ---
     parser.add_argument("--vocab_size", type=int, default=10000)
     parser.add_argument("--context_length", type=int, default=256)
